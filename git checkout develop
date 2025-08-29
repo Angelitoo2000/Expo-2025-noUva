@@ -1,0 +1,29 @@
+[33mcommit b3e84bc89574121fefcd04b33349fa7596e4e8ae[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m
+Author: Angelitoo2000 <angel.trejo2026@hilasal.superate.org.sv>
+Date:   Sat Aug 23 13:58:19 2025 -0600
+
+    añadi prueba.html
+
+[33mcommit b47b3767d336e11f5540b7c8be652d9b53924217[m
+Author: Angelitoo2000 <angel.trejo2026@hilasal.superate.org.sv>
+Date:   Sat Aug 23 13:28:29 2025 -0600
+
+    use php en vez de html
+
+[33mcommit 56198143b2e8eedb757cef063e96a61ce697bd0b[m[33m ([m[1;31morigin/form[m[33m)[m
+Author: Angelitoo2000 <angel.trejo2026@hilasal.superate.org.sv>
+Date:   Sat Aug 23 13:12:18 2025 -0600
+
+    añadi name en el botón
+
+[33mcommit 424e3153721e47785891d7c785b2726c071917b9[m
+Author: Angelitoo2000 <angel.trejo2026@hilasal.superate.org.sv>
+Date:   Sat Aug 23 12:59:21 2025 -0600
+
+    añadi post y action
+
+[33mcommit 1805cbb6a9b3f68e646eb3932cc71012f5089fb2[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: Angelitoo2000 <angel.trejo2026@hilasal.superate.org.sv>
+Date:   Fri Aug 22 19:07:03 2025 -0600
+
+    Se creo podcast y registro
