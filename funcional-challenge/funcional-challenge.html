@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Challenge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  
+  <nav class="bg-blue-950 text-white px-8 py-4 flex justify-between items-center shadow-lg">
+    <div>
+      <img src="logo.jpg" alt="logo" class="h-12 w-auto">
+    </div>
+    <div class="space-x-6 font-medium">
+      <a href="index.html" class="hover:text-amber-400">Home</a>
+      <a href="universities.html" class="hover:text-amber-400">Universities</a>
+      <a href="podcast.html" class="hover:text-amber-400">Podcasts</a>
+      <a href="challenges.html" class="hover:text-amber-400">Challenges</a>
+      <a href="majors.html" class="hover:text-amber-400">Majors</a>
+    </div>
+  </nav>
+
+ 
+  <main class="flex-grow flex items-center justify-center py-10">
+    <div class="w-full max-w-3xl bg-white shadow-xl rounded-2xl p-6 text-center">
+      <h1 class="text-2xl font-bold text-indigo-700 mb-4">Challenge-Develop you Logic!</h1>
+      
+    
+      <img id="pattern" src="pattern1.png" alt="Patrón incompleto" 
+           class="mx-auto mb-6 border rounded-lg shadow w-72 h-72 object-contain"> 
+
+      
+      <div id="options-container" class="grid grid-cols-2 gap-4 mb-6"></div>
+
+      
+      <p id="feedback" class="text-lg font-semibold"></p>
+
+     
+      <button id="nextBtn" 
+              class="hidden mt-6 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-800 transition">
+        Next ➡️
+      </button>
+
+      
+      <div class="mt-6 hidden" id="returnBtnContainer">
+        <a href="challenges.html" 
+           class="px-6 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition">
+           🔙 Go back to challenges
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+   
+    const challenges = [
+      {
+        pattern: "PatrC1.jpg",
+        options: [
+          {img: "Opcion2.jpg", correct: true},  
+          {img: "Opcion1.jpg", correct: false},
+          {img: "Opcion3.jpg", correct: false},
+          {img: "Opcion4.jpg", correct: false}
+        ]
+      },
+      {
+        pattern: "PatrC2.jpg", 
+        options: [
+          {img: "Opcion5.jpg", correct: false},
+          {img: "Opcion6.jpg", correct: true},   
+          {img: "Opcion7.jpg", correct: false},
+          {img: "Opcion8.jpg", correct: false},
+        ]
+      },
+      {
+        pattern: "PatrC3.jpg", 
+        options: [
+          {img: "Opcion9.jpg", correct: false},
+          {img: "Opcion11.jpg", correct: true},   
+          {img: "Opcion10.jpg", correct: false},
+          {img: "Opcion12.jpg", correct: false},
+        ]
+      },
+      {
+        pattern: "PatrC4.jpg", 
+        options: [
+          {img: "Opcion13.jpg", correct: false},
+          {img: "Opcion14.jpg", correct: true},   
+          {img: "Opcion15.jpg", correct: false},
+          {img: "Opcion16.jpg", correct: false},
+
+        ]
+      },
+      {
+        pattern: "PatrC5.jpg", 
+        options: [
+          {img: "Opcion17.jpg", correct: false},
+          {img: "Opcion18.jpg", correct: true},   
+          {img: "Opcion19.jpg", correct: false},
+          {img: "Opcion20.jpg", correct: false},
+
+        ]
+      },
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    const patternEl = document.getElementById("pattern");
+    const optionsEl = document.getElementById("options-container");
+    const feedbackEl = document.getElementById("feedback");
+    const nextBtn = document.getElementById("nextBtn");
+    const returnBtnContainer = document.getElementById("returnBtnContainer");
+
+    
+    function loadChallenge() {
+      const challenge = challenges[current];
+      patternEl.src = challenge.pattern; 
+      optionsEl.innerHTML = "";
+      feedbackEl.textContent = "";
+      nextBtn.classList.add("hidden");
+
+      challenge.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "p-2 bg-[#C5A46D] rounded-lg shadow hover:scale-105 transition";
+        const img = document.createElement("img");
+        img.src = opt.img; 
+        img.alt = "opción";
+        img.className = "w-full h-32 object-contain rounded";
+        btn.appendChild(img);
+
+        btn.onclick = () => checkAnswer(opt.correct, btn);
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    
+    function checkAnswer(isCorrect, btn) {
+      const challenge = challenges[current];
+      const buttons = optionsEl.querySelectorAll("button");
+
+      buttons.forEach((b, i) => {
+        b.disabled = true;
+        if (challenge.options[i].correct) {
+          b.classList.remove("bg-[#C5A46D]");
+          b.classList.add("bg-green-500");
+        }
+      });
+
+      if (isCorrect) {
+        feedbackEl.textContent = "✅ ¡Good job!";
+        feedbackEl.className = "text-green-600 font-bold";
+        score++;
+      } else {
+        btn.classList.remove("bg-[#C5A46D]");
+        btn.classList.add("bg-red-500");
+        feedbackEl.textContent = "❌ Wrong answer, the correct answer is in green.";
+        feedbackEl.className = "text-red-600 font-bold";
+      }
+
+      nextBtn.classList.remove("hidden");
+    }
+
+    
+    nextBtn.onclick = () => {
+      current++;
+      if (current < challenges.length) {
+        loadChallenge();
+      } else {
+        patternEl.classList.add("hidden");
+        optionsEl.innerHTML = "";
+        feedbackEl.textContent = `🎉 You finish the challenge, Your score is: ${score} / ${challenges.length}`;
+        feedbackEl.className = "text-indigo-700 font-bold";
+        nextBtn.classList.add("hidden");
+        returnBtnContainer.classList.remove("hidden");
+      }
+    };
+
+    loadChallenge();
+  </script>
+
+</body>
+</html>
