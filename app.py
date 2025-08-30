@@ -1,6 +1,8 @@
 from flask import Flask
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 from routes.carreras_routes import carreras_bp
 from routes.comentarios_routes import comentarios_bp

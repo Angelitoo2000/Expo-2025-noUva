@@ -7,5 +7,7 @@ def get_db_connection():
         password = "fercho1232",
         database = "nouva",
         port=3306,
+        ssl_disabled=True 
     )
+
 #Ending
