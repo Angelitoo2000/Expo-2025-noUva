@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Access</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .form-container {
+            display: none;
+        }
+        .form-container.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md transition-all duration-300">
+        <div class="flex justify-center mb-6">
+            <button id="showLoginBtn" class="px-6 py-2 rounded-full font-bold text-gray-600 hover:bg-gray-200 transition-colors">Log In</button>
+            <button id="showRegistroBtn" class="px-6 py-2 rounded-full font-bold text-gray-600 hover:bg-gray-200 transition-colors">Sign Up</button>
+        </div>
+        
+        <div id="loginFormContainer" class="form-container active">
+            <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Log In</h1>
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label for="loginEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="loginEmail" name="email" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div>
+                    <label for="loginContrasena" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="loginContrasena" name="password" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                    Log In
+                </button>
+            </form>
+        </div>
+
+        <div id="registroFormContainer" class="form-container">
+            <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Sign Up</h1>
+            <form id="registroForm" class="space-y-6">
+                <div>
+                    <label for="registroNombre" class="block text-sm font-medium text-gray-700">Name</label>
+                    <input type="text" id="registroNombre" name="nombre" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div>
+                    <label for="registroApellido" class="block text-sm font-medium text-gray-700">Last Name</label>
+                    <input type="text" id="registroApellido" name="apellido" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div>
+                    <label for="registroEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="registroEmail" name="email" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div>
+                    <label for="registroContrasena" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="registroContrasena" name="contrasena" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                    Sign Up
+                </button>
+            </form>
+        </div>
+        
+        <div id="mensaje" class="mt-4 text-center text-sm font-medium"></div>
+    </div>
+
+    <script>
+        const showLoginBtn = document.getElementById('showLoginBtn');
+        const showRegistroBtn = document.getElementById('showRegistroBtn');
+        const loginFormContainer = document.getElementById('loginFormContainer');
+        const registroFormContainer = document.getElementById('registroFormContainer');
+        const loginForm = document.getElementById('loginForm');
+        const registroForm = document.getElementById('registroForm');
+        const mensajeDiv = document.getElementById('mensaje');
+
+        showLoginBtn.addEventListener('click', () => {
+            loginFormContainer.classList.add('active');
+            registroFormContainer.classList.remove('active');
+        });
+
+        showRegistroBtn.addEventListener('click', () => {
+            registroFormContainer.classList.add('active');
+            loginFormContainer.classList.remove('active');
+        });
+
+        async function submitForm(form, url) {
+            mensajeDiv.textContent = 'Processing...';
+            mensajeDiv.className = 'mt-4 text-center text-sm font-medium text-gray-500';
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    mensajeDiv.textContent = result.mensaje || 'Success!';
+                    mensajeDiv.className = 'mt-4 text-center text-sm font-medium text-green-600';
+                    form.reset();
+                    if (url.includes('/login')) {
+                        window.location.href = '/home';
+                    }
+                } else {
+                    mensajeDiv.textContent = result.error || 'An error occurred.';
+                    mensajeDiv.className = 'mt-4 text-center text-sm font-medium text-red-600';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                mensajeDiv.textContent = 'A network or server error occurred.';
+                mensajeDiv.className = 'mt-4 text-center text-sm font-medium text-red-600';
+            }
+        }
+
+        registroForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitForm(registroForm, '/users/register');
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitForm(loginForm, '/users/login');
+        });
+    </script>
+</body>
+</html>
