@@ -9,7 +9,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+            background-color: #ffffff;
         }
         .form-container {
             display: none;
@@ -17,58 +17,73 @@
         .form-container.active {
             display: block;
         }
+        .tab-button.active {
+            color: #00264D;
+            border-bottom: 2px solid #00264D;
+        }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
-    <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md transition-all duration-300">
-        <div class="flex justify-center mb-6">
-            <button id="showLoginBtn" class="px-6 py-2 rounded-full font-bold text-gray-600 hover:bg-gray-200 transition-colors">Log In</button>
-            <button id="showRegistroBtn" class="px-6 py-2 rounded-full font-bold text-gray-600 hover:bg-gray-200 transition-colors">Sign Up</button>
-        </div>
-        
-        <div id="loginFormContainer" class="form-container active">
-            <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Log In</h1>
-            <form id="loginForm" class="space-y-6">
-                <div>
-                    <label for="loginEmail" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="loginEmail" name="email" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-                </div>
-                <div>
-                    <label for="loginContrasena" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="password" id="loginContrasena" name="password" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-                </div>
-                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                    Log In
-                </button>
-            </form>
-        </div>
+<body class="flex flex-col items-center justify-center min-h-screen bg-white p-4 pt-4 pb-4">
+    <div class="flex flex-col md:flex-row w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <div class="w-full md:w-1/2 p-10 flex flex-col justify-center">
+            <div class="flex items-center mb-2">
+                <img src="{{ url_for('static', filename='logo.jpeg') }}" alt="noUva Logo" class="h-16">
+            </div>
+            <h2 class="text-gray-600 mb-6">Welcome back!</h2>
+            
+            <div class="flex justify-center mb-1 border-b border-gray-200">
+                <button id="showLoginBtn" class="tab-button px-6 py-2 font-bold text-gray-600 hover:text-blue-900 transition-colors active">Login</button>
+                <button id="showRegistroBtn" class="tab-button px-6 py-2 font-bold text-gray-600 hover:text-blue-900 transition-colors">Sign Up</button>
+            </div>
+            
+            <div id="loginFormContainer" class="form-container active">
+                <h1 class="text-4xl font-bold mb-6 text-gray-800">Login</h1>
+                <form id="loginForm" class="space-y-6">
+                    <div>
+                        <label for="loginEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="loginEmail" name="email" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-900 focus:border-blue-900 transition" required>
+                    </div>
+                    <div>
+                        <label for="loginContrasena" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="loginContrasena" name="password" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-900 focus:border-blue-900 transition" required>
+                    </div>
+                    <button type="submit" class="w-full flex justify-center py-3 px-4 rounded-full shadow-sm text-base font-medium text-white bg-blue-900 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-900 transition" style="background-color: #00264D;">
+                        Login
+                    </button>
+                </form>
+            </div>
 
-        <div id="registroFormContainer" class="form-container">
-            <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Sign Up</h1>
-            <form id="registroForm" class="space-y-6">
-                <div>
-                    <label for="registroNombre" class="block text-sm font-medium text-gray-700">Name</label>
-                    <input type="text" id="registroNombre" name="nombre" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+            <div id="registroFormContainer" class="form-container">
+                <h1 class="text-4xl font-bold mb-6 text-gray-800">Sign Up</h1>
+                <form id="registroForm" class="space-y-6">
+                        <div>
+                            <label for="registroNombre" class="block text-sm font-medium text-gray-700">Name</label>
+                            <input type="text" id="registroNombre" name="nombre" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-900 focus:border-blue-900 transition" required>
+                        </div>
+                        <div>
+                            <label for="registroApellido" class="block text-sm font-medium text-gray-700">Last Name</label>
+                            <input type="text" id="registroApellido" name="apellido" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-900 focus:border-blue-900 transition" required>
+                        </div>
+                        <div>
+                            <label for="registroEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" id="registroEmail" name="email" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-900 focus:border-blue-900 transition" required>
+                        </div>
+                        <div>
+                            <label for="registroContrasena" class="block text-sm font-medium text-gray-700">Password</label>
+                            <input type="password" id="registroContrasena" name="contrasena" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-900 focus:border-blue-900 transition" required>
+                        </div>
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 rounded-full shadow-sm text-base font-medium text-white bg-blue-900 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-900 transition" style="background-color: #00264D;">
+                            Sign Up
+                        </button>
+                    </form>
                 </div>
-                <div>
-                    <label for="registroApellido" class="block text-sm font-medium text-gray-700">Last Name</label>
-                    <input type="text" id="registroApellido" name="apellido" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-                </div>
-                <div>
-                    <label for="registroEmail" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="registroEmail" name="email" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-                </div>
-                <div>
-                    <label for="registroContrasena" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="password" id="registroContrasena" name="contrasena" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-                </div>
-                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                    Sign Up
-                </button>
-            </form>
+                <div id="mensaje" class="mt-4 text-center text-sm font-medium"></div>
+            </div>
+
+            <div class="hidden md:flex w-1/2 items-center justify-center p-8 relative overflow-hidden rounded-3xl" style="background-color: #f7fafc;">
+                <img src="{{ url_for('static', filename='9482399-removebg-preview.png') }}" alt="3D illustration of a person using a laptop" class="w-full h-full object-contain">
+            </div>
         </div>
-        
-        <div id="mensaje" class="mt-4 text-center text-sm font-medium"></div>
     </div>
 
     <script>
@@ -83,11 +98,17 @@
         showLoginBtn.addEventListener('click', () => {
             loginFormContainer.classList.add('active');
             registroFormContainer.classList.remove('active');
+            showLoginBtn.classList.add('active');
+            showRegistroBtn.classList.remove('active');
+            mensajeDiv.textContent = '';
         });
 
         showRegistroBtn.addEventListener('click', () => {
             registroFormContainer.classList.add('active');
             loginFormContainer.classList.remove('active');
+            showRegistroBtn.classList.add('active');
+            showLoginBtn.classList.remove('active');
+            mensajeDiv.textContent = '';
         });
 
         async function submitForm(form, url) {
@@ -109,7 +130,7 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    mensajeDiv.textContent = result.mensaje || 'Success!';
+                    mensajeDiv.textContent = result.message || 'Success!';
                     mensajeDiv.className = 'mt-4 text-center text-sm font-medium text-green-600';
                     form.reset();
                     if (url.includes('/login')) {
@@ -123,6 +144,7 @@
                 console.error('Error:', error);
                 mensajeDiv.textContent = 'A network or server error occurred.';
                 mensajeDiv.className = 'mt-4 text-center text-sm font-medium text-red-600';
+                
             }
         }
 
