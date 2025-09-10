@@ -11,10 +11,13 @@
   <!-- Header -->
   <header class="bg-white shadow-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
- <img src="image.png" class="w-30 h-20 -ml-10">
+      <!-- Logo -->
+      <img src="{{ url_for('static', filename='logoFondoBlanco.jpeg') }}" 
+           alt="noUva Logo" class="w-32 h-16 object-contain -ml-4">
+      
+      <!-- Login/SignUp -->
       <nav class="space-x-6 hidden md:flex">
-        <a href="../Home/Home.html" class="hover:text-indigo-600 transition font-bold text-2xl">Continue</a>
-       
+        <a href="/login" class="hover:text-indigo-600 transition font-bold text-2xl"> Sign Up / Log in </a>
       </nav>
     </div>
   </header>
@@ -23,7 +26,6 @@
   <section class="text-center py-20 bg-blue-950 text-white">
     <h2 class="text-4xl md:text-6xl font-bold mb-6" data-aos="fade-up">noUva</h2>
     <p class="text-lg md:text-xl mb-8" data-aos="fade-up" data-aos-delay="200">Explore and prepare yourself to your future</p>
- 
   </section>
  
   <!-- Features -->
@@ -103,4 +105,3 @@
   </script>
 </body>
 </html>
- 

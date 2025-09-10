@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Challenge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-[#00224F] text-white p-4 shadow-lg">
+    <div class="container mx-auto flex items-center justify-between">
+      <!-- Logo -->
+      <img src="{{ url_for('static', filename='home/logoFondoAzul.jpeg') }}" 
+           alt="Logo" class="h-16 w-40">
+
+      <!-- Links -->
+      <div class="flex items-center space-x-6">
+        <a href="{{ url_for('home_page') }}" class="hover:underline">Home</a>
+        <a href="{{ url_for('universities_page') }}" class="hover:underline">Universities</a>
+        <a href="{{ url_for('podcasts_page') }}" class="hover:underline">Podcasts</a>
+        <a href="{{ url_for('challenges_page') }}" class="hover:underline">Challenges</a>
+        <a href="{{ url_for('subcription_page') }}" class="hover:underline">Get premium</a>
+        <!-- Foto de perfil -->
+        <a href="{{ url_for('perfil_page') }}">
+          <img id="navbar-pic"
+               src="{{ url_for('static', filename='default.png') }}" 
+               alt="Profile"
+               class="h-10 w-10 rounded-full border-2 border-white hover:scale-105 transition-transform duration-200">
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="flex-grow flex items-center justify-center py-10">
+    <div class="w-full max-w-3xl bg-white shadow-xl rounded-2xl p-6 text-center">
+      <h1 class="text-2xl font-bold text-indigo-700 mb-4">Challenge - Develop your Logic!</h1>
+      
+      <!-- Patrón principal -->
+      <img id="pattern" src="{{ url_for('static', filename='challenges-funcional/PatrC1.jpg') }}" 
+           alt="Patrón incompleto" 
+           class="mx-auto mb-6 border rounded-lg shadow w-72 h-72 object-contain"> 
+
+      <!-- Opciones -->
+      <div id="options-container" class="grid grid-cols-2 gap-4 mb-6"></div>
+
+      <!-- Feedback -->
+      <p id="feedback" class="text-lg font-semibold"></p>
+
+      <!-- Botón siguiente -->
+      <button id="nextBtn" 
+              class="hidden mt-6 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-800 transition">
+        Next ➡️
+      </button>
+
+      <!-- Botón volver -->
+      <div class="mt-6 hidden" id="returnBtnContainer">
+        <a href="{{ url_for('challenges_page') }}" 
+           class="px-6 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition">
+           🔙 Go back to challenges
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Script -->
+  <script>
+    const challenges = [
+      {
+        pattern: "{{ url_for('static', filename='challenges-funcional/PatrC1.jpg') }}",
+        options: [
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion2.jpg') }}", correct: true},  
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion1.jpg') }}", correct: false},
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion3.jpg') }}", correct: false},
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion4.jpg') }}", correct: false}
+        ]
+      },
+      {
+        pattern: "{{ url_for('static', filename='challenges-funcional/PatrC2.jpg') }}", 
+        options: [
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion5.jpg') }}", correct: false},
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion6.jpg') }}", correct: true},   
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion7.jpg') }}", correct: false},
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion8.jpg') }}", correct: false},
+        ]
+      },
+      {
+        pattern: "{{ url_for('static', filename='challenges-funcional/PatrC3.jpg') }}", 
+        options: [
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion9.jpg') }}", correct: false},
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion11.jpg') }}", correct: true},   
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion10.jpg') }}", correct: false},
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion12.jpg') }}", correct: false},
+        ]
+      },
+      {
+        pattern: "{{ url_for('static', filename='challenges-funcional/PatrC4.jpg') }}", 
+        options: [
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion13.jpg') }}", correct: false},
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion14.jpg') }}", correct: true},   
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion15.jpg') }}", correct: false},
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion16.jpg') }}", correct: false},
+        ]
+      },
+      {
+        pattern: "{{ url_for('static', filename='challenges-funcional/PatrC5.jpg') }}", 
+        options: [
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion17.jpg') }}", correct: false},
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion18.jpg') }}", correct: true},   
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion19.jpg') }}", correct: false},
+          {img: "{{ url_for('static', filename='challenges-funcional/Opcion20.jpg') }}", correct: false},
+        ]
+      },
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    const patternEl = document.getElementById("pattern");
+    const optionsEl = document.getElementById("options-container");
+    const feedbackEl = document.getElementById("feedback");
+    const nextBtn = document.getElementById("nextBtn");
+    const returnBtnContainer = document.getElementById("returnBtnContainer");
+
+    function loadChallenge() {
+      const challenge = challenges[current];
+      patternEl.src = challenge.pattern; 
+      optionsEl.innerHTML = "";
+      feedbackEl.textContent = "";
+      nextBtn.classList.add("hidden");
+
+      challenge.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "p-2 bg-[#C5A46D] rounded-lg shadow hover:scale-105 transition";
+        const img = document.createElement("img");
+        img.src = opt.img; 
+        img.alt = "opción";
+        img.className = "w-full h-32 object-contain rounded";
+        btn.appendChild(img);
+
+        btn.onclick = () => checkAnswer(opt.correct, btn);
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(isCorrect, btn) {
+      const challenge = challenges[current];
+      const buttons = optionsEl.querySelectorAll("button");
+
+      buttons.forEach((b, i) => {
+        b.disabled = true;
+        if (challenge.options[i].correct) {
+          b.classList.remove("bg-[#C5A46D]");
+          b.classList.add("bg-green-500");
+        }
+      });
+
+      if (isCorrect) {
+        feedbackEl.textContent = "✅ ¡Good job!";
+        feedbackEl.className = "text-green-600 font-bold";
+        score++;
+      } else {
+        btn.classList.remove("bg-[#C5A46D]");
+        btn.classList.add("bg-red-500");
+        feedbackEl.textContent = "❌ Wrong answer, the correct answer is in green.";
+        feedbackEl.className = "text-red-600 font-bold";
+      }
+
+      nextBtn.classList.remove("hidden");
+    }
+
+    nextBtn.onclick = () => {
+      current++;
+      if (current < challenges.length) {
+        loadChallenge();
+      } else {
+        patternEl.classList.add("hidden");
+        optionsEl.innerHTML = "";
+        feedbackEl.textContent = `🎉 You finish the challenge! Your score is: ${score} / ${challenges.length}`;
+        feedbackEl.className = "text-indigo-700 font-bold";
+        nextBtn.classList.add("hidden");
+        returnBtnContainer.classList.remove("hidden");
+      }
+    };
+
+    loadChallenge();
+  </script>
+
+  <!-- Footer -->
+  <footer class="bg-[#00224F] text-white text-center py-6 mt-10">
+    <p class="text-sm">&copy; 2025 NoUva. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

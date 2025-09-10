@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>noUva Subscriptions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-white text-slate-900">
+
+  <!-- Navbar (igual que en Home) -->
+  <nav class="bg-[#00224F] text-white p-4">
+    <div class="container mx-auto flex items-center justify-between">
+      <!-- Logo -->
+      <img src="{{ url_for('static', filename='home/logoFondoAzul.jpeg') }}" 
+           alt="Logo" class="h-16 w-40">
+
+      <!-- Links -->
+      <div class="flex items-center space-x-6">
+        <a href="{{ url_for('home_page') }}" class="hover:underline">Home</a>
+        <a href="{{ url_for('universities_page') }}" class="hover:underline">Universities</a>
+        <a href="{{ url_for('podcasts_page') }}" class="hover:underline">Podcasts</a>
+        <a href="{{ url_for('challenges_page') }}" class="hover:underline">Challenges</a>
+        <a href="{{ url_for('subcription_page') }}" class="hover:underline">Get premium</a>
+
+        <!-- Foto de perfil -->
+        <a href="{{ url_for('perfil_page') }}">
+          <img id="navbar-pic"
+               src="{{ url_for('static', filename='default.png') }}" 
+               alt="Profile"
+               class="h-10 w-10 rounded-full border-2 border-white hover:scale-105 transition-transform duration-200">
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido -->
+  <main class="mx-auto max-w-5xl px-6 py-16">
+    <h1 class="text-2xl md:text-3xl font-bold">noUva Monthly Subscriptions</h1>
+    <p class="mt-2 text-slate-600">
+      Choose the perfect plan for you. Enjoy the benefits of noUva, don’t limit yourself!
+    </p>
+
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="rounded-xl border border-slate-200 p-6 shadow-gray-600 shadow-5g">
+        <h2 class="font-semibold text-lg">Free</h2>
+        <p class="text-3xl font-extrabold mt-2">$0<span class="text-base font-medium"> /month</span></p>
+        <button class="mt-6 w-full rounded-lg bg-[#D9C7A6] py-2 font-medium hover:bg-[#c7b38d]">
+          Subscribe
+        </button>
+        <ul class="mt-4 space-y-2 text-slate-600 text-sm">
+          <li class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Limited access to podcasts
+          </li>
+        </ul>
+      </div>
+
+      <div class="rounded-xl border border-slate-200 p-6 shadow-gray-600 shadow-5g">
+        <h2 class="font-semibold text-lg">Premium</h2>
+        <p class="text-3xl font-extrabold mt-2">$0.99<span class="text-base font-medium"> /month</span></p>
+        <button class="mt-6 w-full rounded-lg bg-[#D9C7A6] py-2 font-medium hover:bg-[#c7b38d]">
+          Subscribe
+        </button>
+        <ul class="mt-4 space-y-2 text-slate-600 text-sm">
+          <li class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Unlimited access to podcasts
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const res = await fetch("http://127.0.0.1:5000/profile", {
+          credentials: "include" // 👈 necesario para mandar cookies
+        });
+        const data = await res.json();
+        if (data && !data.error && data.foto_url) {
+          document.getElementById("navbar-pic").src = "/static/" + data.foto_url;
+        }
+      } catch (err) {
+        console.error("Error cargando foto:", err);
+      }
+    });
+  </script>
+
+  <!-- Footer -->
+  <footer class="bg-[#00224F] text-white text-center py-6 mt-10">
+    <p class="text-sm">&copy; 2025 NoUva. All rights reserved.</p>
+  </footer>
+  
+</body>
+</html>
+ 

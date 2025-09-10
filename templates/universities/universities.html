@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universities</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-[#00224F] text-white p-4">
+    <div class="container mx-auto flex items-center justify-between">
+      <!-- Logo -->
+      <img src="{{ url_for('static', filename='home/logoFondoAzul.jpeg') }}" 
+           alt="Logo" class="h-16 w-40">
+
+      <!-- Links -->
+      <div class="flex items-center space-x-6">
+        <a href="{{ url_for('home_page') }}" class="hover:underline">Home</a>
+        <a href="{{ url_for('universities_page') }}" class="hover:underline">Universities</a>
+        <a href="{{ url_for('podcasts_page') }}" class="hover:underline">Podcasts</a>
+        <a href="{{ url_for('challenges_page') }}" class="hover:underline">Challenges</a>
+        <a href="{{ url_for('subcription_page') }}" class="hover:underline">Get premium</a>
+        <!-- Foto de perfil -->
+        <a href="{{ url_for('perfil_page') }}">
+          <img id="navbar-pic"
+               src="{{ url_for('static', filename='default.png') }}" 
+               alt="Profile"
+               class="h-10 w-10 rounded-full border-2 border-white hover:scale-105 transition-transform duration-200">
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="relative">
+    <img src="https://media-exp1.licdn.com/dms/image/C4E1BAQEV7icBnm9_pQ/company-background_10000/0/1537396358823?e=2159024400&v=beta&t=y4-zcmEN8imsaHabp76y8kkwuQQL43RkkrXwONpCv5o"
+         alt="University campus"
+         class="w-full h-[400px] object-cover brightness-75 rounded-b-2xl">
+
+    <div class="absolute top-1/3 left-16 text-white max-w-lg">
+      <h1 class="text-5xl font-extrabold mb-4">Explore your future</h1>
+      <p class="text-lg mb-6">Discover universities and majors that match your interests and goals. Start your journey towards a successful future today.</p>
+    </div>
+  </section>
+
+  <!-- Universities Carousel -->
+  <section class="px-10 py-16">
+    <h2 class="text-2xl font-bold mb-8 text-center">Popular Universities in El Salvador</h2>
+
+    <div class="relative w-full max-w-5xl mx-auto overflow-hidden">
+      <div id="carousel" class="flex transition-transform duration-700 ease-in-out">
+        
+        <!-- Slide 1 -->
+        <div class="min-w-full px-4">
+          <div class="bg-white rounded-xl shadow p-5">
+            <img src="https://www.unirioja.es/wp-content/uploads/2023/07/20230720-Universidad-Centroamericana-visita-Unirioja-001.jpg"
+                alt="UCA"
+                class="rounded-md w-full h-60 object-cover mb-4">
+            <h3 class="font-bold text-lg"><a href="../feauture-detail.uni/detailuni.html">Universidad Centroamericana "José Simeón Cañas" (UCA El Salvador)</a></h3>
+            <p class="text-sm mt-2"><strong>Location:</strong> Boulevard Los Próceres, Antiguo Cuscatlán, La Libertad.</p>
+            <p class="text-sm mt-2"><strong>Type:</strong> Private, non-profit university.</p>
+            <p class="text-sm mt-2"><strong>Website:</strong> <a href="https://www.uca.edu.sv" target="_blank" class="text-blue-700 hover:underline">www.uca.edu.sv</a></p>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="min-w-full px-4">
+          <div class="bg-white rounded-xl shadow p-5">
+            <img src="https://www.udb.edu.sv/udb_files/recursos_noticias/1298/imagen.jpg"
+                alt="UDB"
+                class="rounded-md w-full h-60 object-cover mb-4">
+            <h3 class="font-bold text-lg">Universidad Don Bosco (UDB)</h3>
+            <p class="text-sm mt-2"><strong>Location:</strong> Soyapango, San Salvador, El Salvador.</p>
+            <p class="text-sm mt-2"><strong>Type:</strong> Private university.</p>
+            <p class="text-sm mt-2"><strong>Website:</strong> <a href="https://www.udb.edu.sv" target="_blank" class="text-blue-700 hover:underline">www.udb.edu.sv</a></p>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="min-w-full px-4">
+          <div class="bg-white rounded-xl shadow p-5">
+            <img src="https://www.utec.edu.sv/utecdri/assets/img/img_titulacion.jpg"
+                alt="UTEC"
+                class="rounded-md w-full h-60 object-cover mb-4">
+            <h3 class="font-bold text-lg">Technological University of El Salvador (UTEC)</h3>
+            <p class="text-sm mt-2"><strong>Location:</strong> San Salvador, El Salvador.</p>
+            <p class="text-sm mt-2"><strong>Type:</strong> Private university.</p>
+            <p class="text-sm mt-2"><strong>Website:</strong> <a href="https://www.utec.edu.sv" target="_blank" class="text-blue-700 hover:underline">www.utec.edu.sv</a></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <button onclick="moveSlide(-1)" 
+        class="absolute top-1/2 left-3 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full">
+        &#10094;
+      </button>
+      <button onclick="moveSlide(1)" 
+        class="absolute top-1/2 right-3 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full">
+        &#10095;
+      </button>
+    </div>
+  </section>
+
+  <!-- Majors Section -->
+  <section class="px-10 py-16 bg-gray-100">
+    <h2 class="text-2xl font-bold mb-8 text-center">Popular Majors</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <div class="bg-white rounded-xl shadow p-5">
+        <img src="https://cdn.ufidelitas.ac.cr/wp-content/uploads/2019/11/07082250/sistemas-web.jpg"
+             alt="Software Developer"
+             class="rounded-md w-full h-40 object-cover mb-4">
+        <h3 class="font-bold text-lg">Software Developer</h3>
+        <p class="text-sm mt-2">Develops, tests, and maintains software applications for web, mobile, or desktop platforms.</p>
+        <ul class="text-sm mt-2 list-disc list-inside">
+          <li>Programming (Java, Python, JavaScript, etc.)</li>
+          <li>Problem-solving and logical thinking</li>
+          <li>Team collaboration and communication</li>
+        </ul>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-5">
+        <img src="https://portalerp.com/images/2022/01/27/data-science-la-carrera-del-presente-y-el-futuro-para-el-mundo-digitaljpeg.jpeg"
+             alt="Data Scientist"
+             class="rounded-md w-full h-40 object-cover mb-4">
+        <h3 class="font-bold text-lg">Data Scientist</h3>
+        <p class="text-sm mt-2">Analyzes large sets of data to extract insights and support decision-making using statistical methods and machine learning.</p>
+        <ul class="text-sm mt-2 list-disc list-inside">
+          <li>Data analysis and statistics</li>
+          <li>Programming for data (Python, R, SQL)</li>
+          <li>Data visualization and communication</li>
+        </ul>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-5">
+        <img src="https://avahr.com/wp-content/uploads/2024/02/sales-and-marketing-manager-job-description-template.jpg"
+             alt="Marketing Specialist"
+             class="rounded-md w-full h-40 object-cover mb-4">
+        <h3 class="font-bold text-lg">Marketing Specialist</h3>
+        <p class="text-sm mt-2">Plans, executes, and monitors marketing campaigns to promote products or services effectively.</p>
+        <ul class="text-sm mt-2 list-disc list-inside">
+          <li>Strategic planning and campaign management</li>
+          <li>Market research and analysis</li>
+          <li>Communication and creativity</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#00224F] text-white text-center py-6 mt-10">
+    <p class="text-sm">&copy; 2025 NoUva. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const carousel = document.getElementById("carousel");
+    const totalSlides = carousel.children.length;
+    let index = 0;
+
+    function moveSlide(step) {
+      index = (index + step + totalSlides) % totalSlides;
+      carousel.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    // autoplay
+    setInterval(() => moveSlide(1), 4000);
+  </script>
+
+</body>
+</html>

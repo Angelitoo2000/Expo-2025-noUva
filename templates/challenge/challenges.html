@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Challenges</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-[#00224F] text-white p-4">
+    <div class="container mx-auto flex items-center justify-between">
+      <!-- Logo -->
+      <img src="{{ url_for('static', filename='home/logoFondoAzul.jpeg') }}" 
+           alt="Logo" class="h-16 w-40">
+
+      <!-- Links -->
+      <div class="flex items-center space-x-6">
+        <a href="{{ url_for('home_page') }}" class="hover:underline">Home</a>
+        <a href="{{ url_for('universities_page') }}" class="hover:underline">Universities</a>
+        <a href="{{ url_for('podcasts_page') }}" class="hover:underline">Podcasts</a>
+        <a href="{{ url_for('challenges_page') }}" class="hover:underline">Challenges</a>
+        <a href="{{ url_for('subcription_page') }}" class="hover:underline">Get premium</a>
+
+        <!-- Foto de perfil -->
+        <a href="{{ url_for('perfil_page') }}">
+          <img id="navbar-pic"
+               src="{{ url_for('static', filename='default.png') }}" 
+               alt="Profile"
+               class="h-10 w-10 rounded-full border-2 border-white hover:scale-105 transition-transform duration-200">
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido -->
+  <main class="container mx-auto mt-10 p-5">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">What challenges we have?</h1>
+    <p class="text-lg text-gray-600 mb-10">
+      Here you can find and develop some of your skills with our challenges.
+    </p>
+
+    <!-- Tarjetas en horizontal -->
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      <a href="{{ url_for('challengeFuncional_page') }}">
+        <div class="flex flex-col items-center border border-gray-300 rounded-xl shadow-md hover:shadow-lg transition p-4 bg-white">
+          <img src="{{ url_for('static', filename='challenges-bar/logic and abstract reasoning.webp') }}" alt="" class="h-16 w-16 rounded-md mb-2">
+          <span class="text-gray-800 font-medium text-center">Logic and abstract reasoning</span>
+        </div>
+      </a>
+
+      <a href="#">
+        <div class="flex flex-col items-center border border-gray-300 rounded-xl shadow-md hover:shadow-lg transition p-4 bg-white">
+          <img src="{{ url_for('static', filename='challenges-bar/Solid maths.webp') }}" alt="" class="h-16 w-16 rounded-md mb-2">
+          <span class="text-gray-800 font-medium text-center">Solid mathematics</span>
+        </div>
+      </a>
+
+      <a href="#">
+        <div class="flex flex-col items-center border border-gray-300 rounded-xl shadow-md hover:shadow-lg transition p-4 bg-white">
+          <img src="{{ url_for('static', filename='challenges-bar/algorithmic thinking.webp') }}" alt="" class="h-16 w-16 rounded-md mb-2">
+          <span class="text-gray-800 font-medium text-center">Algorithmic thinking</span>
+        </div>
+      </a>
+
+      <a href="#">
+        <div class="flex flex-col items-center border border-gray-300 rounded-xl shadow-md hover:shadow-lg transition p-4 bg-white">
+          <img src="{{ url_for('static', filename='challenges-bar/problem solving.webp') }}" alt="" class="h-16 w-16 rounded-md mb-2">
+          <span class="text-gray-800 font-medium text-center">Problem solving</span>
+        </div>
+      </a>
+
+      <a href="#">
+        <div class="flex flex-col items-center border border-gray-300 rounded-xl shadow-md hover:shadow-lg transition p-4 bg-white">
+          <img src="{{ url_for('static', filename='challenges-bar/effective communcation.avif') }}" alt="" class="h-16 w-16 rounded-md mb-2">
+          <span class="text-gray-800 font-medium text-center">Effective Communication</span>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const res = await fetch("http://127.0.0.1:5000/profile", {
+          credentials: "include" // 👈 necesario para mandar cookies
+        });
+        const data = await res.json();
+        if (data && !data.error && data.foto_url) {
+          document.getElementById("navbar-pic").src = "/static/" + data.foto_url;
+        }
+      } catch (err) {
+        console.error("Error cargando foto:", err);
+      }
+    });
+  </script>
+</body>
+</html>

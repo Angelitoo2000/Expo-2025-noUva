@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Home</title>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-[#00224F] text-white p-4">
+    <div class="container mx-auto flex items-center justify-between">
+      <!-- Logo -->
+      <img src="{{ url_for('static', filename='home/logoFondoAzul.jpeg') }}" 
+           alt="Logo" class="h-16 w-40">
+
+      <!-- Links -->
+      <div class="flex items-center space-x-6">
+        <a href="{{ url_for('home_page') }}" class="hover:underline">Home</a>
+        <a href="{{ url_for('universities_page') }}" class="hover:underline">Universities</a>
+        <a href="{{ url_for('podcasts_page') }}" class="hover:underline">Podcasts</a>
+        <a href="{{ url_for('challenges_page') }}" class="hover:underline">Challenges</a>
+        <a href="{{ url_for('subcription_page') }}" class="hover:underline">Get premium</a>
+
+        <!-- Foto de perfil -->
+        <a href="{{ url_for('perfil_page') }}">
+          <img id="navbar-pic"
+               src="{{ url_for('static', filename='default.png') }}" 
+               alt="Profile"
+               class="h-10 w-10 rounded-full border-2 border-white hover:scale-105 transition-transform duration-200">
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido -->
+  <main class="container mx-auto mt-10 p-5">
+
+    <!-- Sección 1 -->
+    <section class="flex flex-col md:flex-row items-center justify-between gap-10 my-16">
+      <div class="md:w-1/2">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
+          Why we are<br> an innovation<br> platform?
+        </h1>
+      </div>
+      <div class="md:w-1/2">
+        <p class="text-lg text-gray-600">
+          A space designed to stimulate creativity and collaboration, providing the necessary tools and resources to turn innovative ideas into concrete projects.
+        </p>
+      </div>
+    </section>
+
+    <!-- Sección 2 -->
+    <section class="my-16">
+      <h2 class="font-bold text-3xl md:text-4xl text-center text-gray-800 mb-10">Most Popular Majors</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 flex flex-col items-center justify-center rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+          <img src="{{ url_for('static', filename='home/code_coding_programming_browser_icon_124774.png') }}" alt="Computer Science" class="w-20 h-20 mb-4">
+          <span class="font-bold text-gray-700">Computer Science</span>
+        </div>
+        <div class="bg-white p-6 flex flex-col items-center justify-center rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+          <img src="{{ url_for('static', filename='home/comment.png') }}" alt="Marketing" class="w-20 h-20 mb-4">
+          <span class="font-bold text-gray-700">Marketing</span>
+        </div>
+        <div class="bg-white p-6 flex flex-col items-center justify-center rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+          <img src="{{ url_for('static', filename='home/briefcase.png') }}" alt="Business" class="w-20 h-20 mb-4">
+          <span class="font-bold text-gray-700">Business</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección 3 -->
+    <section class="my-16">
+      <h2 class="font-bold text-3xl md:text-4xl text-center text-gray-800 mb-10">Featured Universities</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a href="{{ url_for('donBosco_page') }}" class="bg-white p-6 flex flex-col items-center justify-center rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+          <img src="{{ url_for('static', filename='home/facebook.jpg') }}" alt="Universidad Don Bosco" class="w-40 h-32 object-cover rounded-md mb-4">
+          <p class="font-bold text-gray-700">Universidad Don Bosco</p>
+        </a>
+        <a href="{{ url_for('universities_page') }}" class="bg-white p-6 flex flex-col items-center justify-center rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+          <img src="{{ url_for('static', filename='home/R.jpeg') }}" alt="Universidad De El Salvador" class="w-40 h-32 object-cover rounded-md mb-4">
+          <p class="font-bold text-gray-700">Universidad De El Salvador</p>
+        </a>
+        <a href="{{ url_for('universities_page') }}" class="bg-white p-6 flex flex-col items-center justify-center rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+          <img src="{{ url_for('static', filename='home/USAM-CAMPUS.jpg') }}" alt="Universidad Gerardo Barrios" class="w-40 h-32 object-cover rounded-md mb-4">
+          <p class="font-bold text-gray-700">Universidad Gerardo Barrios</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Sección 4 -->
+    <section class="flex flex-col md:flex-row items-center justify-between gap-10 my-16">
+      <div class="md:w-1/2">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
+          What are our<br> challenges?
+        </h1>
+      </div>
+      <div class="md:w-1/2">
+        <p class="text-lg text-gray-600">
+          Our challenges focus on the environment, society, technology, and health, addressing crucial problems through innovation and practical solutions that can improve the quality of life for all people.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", async () => {
+      try {
+          const res = await fetch("http://127.0.0.1:5000/profile", {
+              credentials: "include" 
+          });
+          const data = await res.json();
+          if (data && !data.error && data.foto_url) {
+              document.getElementById("navbar-pic").src = "/static/" + data.foto_url;
+          }
+      } catch (err) {
+          console.error("Error cargando foto:", err);
+      }
+  });
+  </script>
+
+  <!-- Footer -->
+  <footer class="bg-[#00224F] text-white text-center py-6 mt-10">
+    <p class="text-sm">&copy; 2025 NoUva. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

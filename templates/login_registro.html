@@ -1,162 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Access</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-        }
-        .form-container {
-            display: none;
-        }
-        .form-container.active {
-            display: block;
-        }
-        .tab-button.active {
-            color: #00264D;
-            border-bottom: 2px solid #00264D;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Access</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .form-container { display: none; }
+    .form-container.active { display: block; }
+    .tab-button.active {
+      color: #00264D;
+      border-bottom: 2px solid #00264D;
+    }
+  </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen bg-white p-4 pt-4 pb-4">
-    <div class="flex flex-col md:flex-row w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden">
-        <div class="w-full md:w-1/2 p-10 flex flex-col justify-center">
-            <div class="flex items-center mb-2">
-                <img src="{{ url_for('static', filename='Logo.jpeg') }}" alt="noUva Logo" class="h-16">
-            </div>
-            <h2 class="text-gray-600 mb-6">Welcome back!</h2>
-            
-            <div class="flex justify-center mb-1 border-b border-gray-200">
-                <button id="showLoginBtn" class="tab-button px-6 py-2 font-bold text-gray-600 hover:text-blue-900 transition-colors active">Login</button>
-                <button id="showRegistroBtn" class="tab-button px-6 py-2 font-bold text-gray-600 hover:text-blue-900 transition-colors">Sign Up</button>
-            </div>
-            
-            <div id="loginFormContainer" class="form-container active">
-                <h1 class="text-4xl font-bold mb-6 text-gray-800">Login</h1>
-                <form id="loginForm" class="space-y-6">
-                    <div>
-                        <label for="loginEmail" class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" id="loginEmail" name="email" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-900 focus:border-blue-900 transition" required>
-                    </div>
-                    <div>
-                        <label for="loginContrasena" class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" id="loginContrasena" name="password" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-900 focus:border-blue-900 transition" required>
-                    </div>
-                    <button type="submit" class="w-full flex justify-center py-3 px-4 rounded-full shadow-sm text-base font-medium text-white bg-blue-900 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-900 transition" style="background-color: #00264D;">
-                        Login
-                    </button>
-                </form>
-            </div>
+<body class="flex flex-col items-center justify-center bg-white p-4">
 
-            <div id="registroFormContainer" class="form-container">
-                <h1 class="text-4xl font-bold mb-6 text-gray-800">Sign Up</h1>
-                <form id="registroForm" class="space-y-6">
-                        <div>
-                            <label for="registroNombre" class="block text-sm font-medium text-gray-700">Name</label>
-                            <input type="text" id="registroNombre" name="nombre" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-900 focus:border-blue-900 transition" required>
-                        </div>
-                        <div>
-                            <label for="registroApellido" class="block text-sm font-medium text-gray-700">Last Name</label>
-                            <input type="text" id="registroApellido" name="apellido" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-900 focus:border-blue-900 transition" required>
-                        </div>
-                        <div>
-                            <label for="registroEmail" class="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" id="registroEmail" name="email" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-900 focus:border-blue-900 transition" required>
-                        </div>
-                        <div>
-                            <label for="registroContrasena" class="block text-sm font-medium text-gray-700">Password</label>
-                            <input type="password" id="registroContrasena" name="contrasena" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-900 focus:border-blue-900 transition" required>
-                        </div>
-                        <button type="submit" class="w-full flex justify-center py-3 px-4 rounded-full shadow-sm text-base font-medium text-white bg-blue-900 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-900 transition" style="background-color: #00264D;">
-                            Sign Up
-                        </button>
-                    </form>
-                </div>
-                <div id="mensaje" class="mt-4 text-center text-sm font-medium"></div>
-            </div>
+  <!-- Main container -->
+  <div class="flex flex-col md:flex-row w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden my-6">
 
-            <div class="hidden md:flex w-1/2 items-center justify-center p-8 relative overflow-hidden rounded-3xl" style="background-color: #f7fafc;">
-                <img src="{{ url_for('static', filename='9482399-removebg-preview.png') }}" alt="3D illustration of a person using a laptop" class="w-full h-full object-contain">
-            </div>
-        </div>
+    <!-- Left section -->
+    <div class="w-full md:w-1/2 p-10 flex flex-col justify-center">
+      <div class="flex items-center mb-6 justify-center">
+        <img src="{{ url_for('static', filename='logoFondoBlanco.jpeg') }}" 
+             alt="Logo" class="h-16 w-auto">
+      </div>
+      <div class="flex flex-1 items-center justify-center">
+        <img src="{{ url_for('static', filename='9482399-removebg-preview.png') }}" 
+             alt="Brain illustration" 
+             class="rounded-xl mx-auto max-h-96">
+      </div>
     </div>
 
-    <script>
-        const showLoginBtn = document.getElementById('showLoginBtn');
-        const showRegistroBtn = document.getElementById('showRegistroBtn');
-        const loginFormContainer = document.getElementById('loginFormContainer');
-        const registroFormContainer = document.getElementById('registroFormContainer');
-        const loginForm = document.getElementById('loginForm');
-        const registroForm = document.getElementById('registroForm');
-        const mensajeDiv = document.getElementById('mensaje');
+    <!-- Forms section -->
+    <div class="w-full md:w-1/2 p-10 bg-gray-50 flex flex-col justify-center">
 
-        showLoginBtn.addEventListener('click', () => {
-            loginFormContainer.classList.add('active');
-            registroFormContainer.classList.remove('active');
-            showLoginBtn.classList.add('active');
-            showRegistroBtn.classList.remove('active');
-            mensajeDiv.textContent = '';
-        });
+      <!-- Tabs -->
+      <div class="flex justify-center mb-8 border-b border-gray-200">
+        <button id="tab-login" class="tab-button active px-6 py-3 font-medium text-lg text-gray-600 transition-colors duration-200">Login</button>
+        <button id="tab-register" class="tab-button px-6 py-3 font-medium text-lg text-gray-600 transition-colors duration-200">Sing up</button>
+      </div>
 
-        showRegistroBtn.addEventListener('click', () => {
-            registroFormContainer.classList.add('active');
-            loginFormContainer.classList.remove('active');
-            showRegistroBtn.classList.add('active');
-            showLoginBtn.classList.remove('active');
-            mensajeDiv.textContent = '';
-        });
+      <!-- Login -->
+      <div id="form-login" class="form-container active">
+        <form id="login-form">
+          <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
+          <div class="mb-4">
+            <label for="login-correo" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" id="login-correo" name="email" required class="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <div class="mb-6">
+            <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" id="login-password" name="contrasena" required class="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <button type="submit" class="w-full px-4 py-3 bg-[#00264D] text-white font-bold rounded-full hover:bg-[#003366] transition-colors shadow-lg">Login</button>
+        </form>
+      </div>
 
-        async function submitForm(form, url) {
-            mensajeDiv.textContent = 'Processing...';
-            mensajeDiv.className = 'mt-4 text-center text-sm font-medium text-gray-500';
+      <!-- Register -->
+      <div id="form-register" class="form-container">
+        <form id="registro-form">
+          <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Create Account</h2>
+          <div class="mb-4">
+            <label for="registro-nombre" class="block text-sm font-medium text-gray-700">Name</label>
+            <input type="text" id="registro-nombre" name="nombre" required class="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <div class="mb-4">
+            <label for="registro-correo" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" id="registro-correo" name="email" required class="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <div class="mb-6">
+            <label for="registro-password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" id="registro-password" name="contrasena" required class="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <button type="submit" class="w-full px-4 py-3 bg-[#00264D] text-white font-bold rounded-full hover:bg-[#003366] transition-colors shadow-lg">Sing up</button>
+        </form>
+      </div>
 
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
+      <!-- Messages -->
+      <div id="mensaje-box" class="mt-6 p-4 rounded-xl text-center font-medium hidden"></div>
+    </div>
+  </div>
 
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabLogin = document.getElementById('tab-login');
+      const tabRegister = document.getElementById('tab-register');
+      const formLogin = document.getElementById('form-login');
+      const formRegister = document.getElementById('form-register');
+      const loginForm = document.getElementById('login-form');
+      const registroForm = document.getElementById('registro-form');
+      const mensajeDiv = document.getElementById('mensaje-box');
 
-                const result = await response.json();
+      // Diccionario de traducciones
+      const translations = {
+        "Usuario registrado exitosamente": "User registered successfully.",
+        "Inicio de sesión exitoso": "Login successful.",
+        "Correo o contraseña incorrectos": "Incorrect email or password.",
+        "Ya existe un usuario con ese correo": "A user with that email already exists.",
+        "Error en el servidor": "Server error.",
+        "Ocurrió un error de red o de servidor.": "A network or server error occurred."
+      };
 
-                if (response.ok) {
-                    mensajeDiv.textContent = result.message || 'Success!';
-                    mensajeDiv.className = 'mt-4 text-center text-sm font-medium text-green-600';
-                    form.reset();
-                    if (url.includes('/login')) {
-                        window.location.href = '/home';
-                    }
-                } else {
-                    mensajeDiv.textContent = result.error || 'An error occurred.';
-                    mensajeDiv.className = 'mt-4 text-center text-sm font-medium text-red-600';
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                mensajeDiv.textContent = 'A network or server error occurred.';
-                mensajeDiv.className = 'mt-4 text-center text-sm font-medium text-red-600';
-                
+      function translateMessage(msg) {
+        return translations[msg] || msg;
+      }
+
+      function showForm(formToShow, tabToActivate) {
+        formLogin.classList.remove('active');
+        formRegister.classList.remove('active');
+        tabLogin.classList.remove('active');
+        tabRegister.classList.remove('active');
+        formToShow.classList.add('active');
+        tabToActivate.classList.add('active');
+      }
+
+      tabLogin.addEventListener('click', () => showForm(formLogin, tabLogin));
+      tabRegister.addEventListener('click', () => showForm(formRegister, tabRegister));
+
+      async function submitForm(form, url) {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        mensajeDiv.textContent = 'Processing...';
+        mensajeDiv.className = 'mt-6 p-4 rounded-xl text-center font-medium text-gray-600 bg-gray-200 block';
+
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(data)
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            mensajeDiv.textContent = translateMessage(result.message) || 'Success!';
+            mensajeDiv.className = 'mt-6 p-4 rounded-xl text-center font-medium text-green-600 bg-green-100 block';
+            form.reset();
+            if (result.redirect_url) {
+              window.location.href = result.redirect_url;
             }
+          } else {
+            mensajeDiv.textContent = translateMessage(result.error) || 'An error occurred.';
+            mensajeDiv.className = 'mt-6 p-4 rounded-xl text-center font-medium text-red-600 bg-red-100 block';
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          mensajeDiv.textContent = 'A network or server error occurred.';
+          mensajeDiv.className = 'mt-6 p-4 rounded-xl text-center font-medium text-red-600 bg-red-100 block';
         }
+      }
 
-        registroForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            submitForm(registroForm, '/users/register');
-        });
+      registroForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitForm(registroForm, 'http://localhost:5000/users/register');
+      });
 
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            submitForm(loginForm, '/users/login');
-        });
-    </script>
+      loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitForm(loginForm, 'http://localhost:5000/users/login');
+      });
+    });
+  </script>
 </body>
 </html>

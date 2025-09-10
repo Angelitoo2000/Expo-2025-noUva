@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Don Bosco University</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-[#00224F] text-white p-4">
+    <div class="container mx-auto flex items-center justify-between">
+      <!-- Logo -->
+      <img src="{{ url_for('static', filename='home/logoFondoAzul.jpeg') }}" 
+           alt="Logo" class="h-16 w-40">
+
+      <!-- Links -->
+      <div class="flex items-center space-x-6">
+        <a href="{{ url_for('home_page') }}" class="hover:underline">Home</a>
+        <a href="{{ url_for('universities_page') }}" class="hover:underline">Universities</a>
+        <a href="{{ url_for('podcasts_page') }}" class="hover:underline">Podcasts</a>
+        <a href="{{ url_for('challenges_page') }}" class="hover:underline">Challenges</a>
+        <a href="{{ url_for('subcription_page') }}" class="hover:underline">Get premium</a>
+
+        <!-- Profile picture -->
+        <a href="{{ url_for('perfil_page') }}">
+          <img id="navbar-pic"
+               src="{{ url_for('static', filename='default.png') }}" 
+               alt="Profile"
+               class="h-10 w-10 rounded-full border-2 border-white hover:scale-105 transition-transform duration-200">
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <main class="px-10 py-10 grid grid-cols-1 md:grid-cols-2 gap-8 bg-white shadow-md max-w-6xl mx-auto mt-10 rounded-2xl">
+
+    <!-- Images and text -->
+
+      <p class="text-gray-700 leading-relaxed">
+        All these skills are essential for a successful career in Systems Engineering.
+        Logical thinking and analytical skills help engineers break down complex problems and design efficient solutions.
+        Programming knowledge is fundamental for building and maintaining software systems. Teamwork and effective
+        communication are crucial, as most projects are collaborative and require coordination with both technical and
+        non-technical stakeholders. Time management ensures that deadlines are met and resources are used efficiently.
+        Given the rapid evolution of technology, adaptability and continuous learning are key to staying relevant.
+        Finally, critical thinking and problem-solving allow engineers to tackle challenges creatively and make sound
+        decisions under pressure.
+      </p>
+    </div>
+
+    <div class="flex flex-col justify-center items-center text-center">
+      <h2 class="text-2xl font-bold mb-4 text-green-900">Required Skills:</h2>
+      <ul class="list-disc list-inside space-y-2 text-gray-800">
+        <li>Logical thinking</li>
+        <li>Analytical skills</li>
+        <li>Teamwork</li>
+        <li>Effective communication</li>
+        <li>Time management and organization</li>
+        <li>Adaptability and continuous learning</li>
+        <li>Critical thinking and problem-solving</li>
+      </ul>
+    </div>
+
+
+
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const res = await fetch("http://127.0.0.1:5000/profile", {
+          credentials: "include"
+        });
+        const data = await res.json();
+        if (data && !data.error && data.foto_url) {
+          document.getElementById("navbar-pic").src = "/static/" + data.foto_url;
+        }
+      } catch (err) {
+        console.error("Error loading profile picture:", err);
+      }
+    });
+  </script> 
+  
+   <!-- Footer -->
+  <footer class="bg-[#00224F] text-white text-center py-6 mt-10">
+    <p class="text-sm">&copy; 2025 NoUva. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
