@@ -7,9 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-    body {
-      font-family: 'Inter', sans-serif;
-    }
+    body { font-family: 'Inter', sans-serif; }
     .form-container { display: none; }
     .form-container.active { display: block; }
     .tab-button.active {
@@ -20,32 +18,22 @@
 </head>
 <body class="flex flex-col items-center justify-center bg-white p-4">
 
-  <!-- Main container -->
   <div class="flex flex-col md:flex-row w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden my-6">
-
-    <!-- Left section -->
     <div class="w-full md:w-1/2 p-10 flex flex-col justify-center">
       <div class="flex items-center mb-6 justify-center">
-        <img src="{{ url_for('static', filename='logoFondoBlanco.jpeg') }}" 
-             alt="Logo" class="h-16 w-auto">
+        <img src="{{ url_for('static', filename='logoFondoBlanco.jpeg') }}" alt="Logo" class="h-16 w-auto">
       </div>
       <div class="flex flex-1 items-center justify-center">
-        <img src="{{ url_for('static', filename='9482399-removebg-preview.png') }}" 
-             alt="Brain illustration" 
-             class="rounded-xl mx-auto max-h-96">
+        <img src="{{ url_for('static', filename='9482399-removebg-preview.png') }}" alt="Brain illustration" class="rounded-xl mx-auto max-h-96">
       </div>
     </div>
 
-    <!-- Forms section -->
     <div class="w-full md:w-1/2 p-10 bg-gray-50 flex flex-col justify-center">
-
-      <!-- Tabs -->
       <div class="flex justify-center mb-8 border-b border-gray-200">
         <button id="tab-login" class="tab-button active px-6 py-3 font-medium text-lg text-gray-600 transition-colors duration-200">Login</button>
-        <button id="tab-register" class="tab-button px-6 py-3 font-medium text-lg text-gray-600 transition-colors duration-200">Sing up</button>
+        <button id="tab-register" class="tab-button px-6 py-3 font-medium text-lg text-gray-600 transition-colors duration-200">Sign up</button>
       </div>
 
-      <!-- Login -->
       <div id="form-login" class="form-container active">
         <form id="login-form">
           <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
@@ -61,7 +49,6 @@
         </form>
       </div>
 
-      <!-- Register -->
       <div id="form-register" class="form-container">
         <form id="registro-form">
           <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Create Account</h2>
@@ -77,11 +64,10 @@
             <label for="registro-password" class="block text-sm font-medium text-gray-700">Password</label>
             <input type="password" id="registro-password" name="contrasena" required class="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
           </div>
-          <button type="submit" class="w-full px-4 py-3 bg-[#00264D] text-white font-bold rounded-full hover:bg-[#003366] transition-colors shadow-lg">Sing up</button>
+          <button type="submit" class="w-full px-4 py-3 bg-[#00264D] text-white font-bold rounded-full hover:bg-[#003366] transition-colors shadow-lg">Sign up</button>
         </form>
       </div>
 
-      <!-- Messages -->
       <div id="mensaje-box" class="mt-6 p-4 rounded-xl text-center font-medium hidden"></div>
     </div>
   </div>
@@ -95,20 +81,6 @@
       const loginForm = document.getElementById('login-form');
       const registroForm = document.getElementById('registro-form');
       const mensajeDiv = document.getElementById('mensaje-box');
-
-      // Diccionario de traducciones
-      const translations = {
-        "Usuario registrado exitosamente": "User registered successfully.",
-        "Inicio de sesión exitoso": "Login successful.",
-        "Correo o contraseña incorrectos": "Incorrect email or password.",
-        "Ya existe un usuario con ese correo": "A user with that email already exists.",
-        "Error en el servidor": "Server error.",
-        "Ocurrió un error de red o de servidor.": "A network or server error occurred."
-      };
-
-      function translateMessage(msg) {
-        return translations[msg] || msg;
-      }
 
       function showForm(formToShow, tabToActivate) {
         formLogin.classList.remove('active');
@@ -140,14 +112,14 @@
           const result = await response.json();
 
           if (response.ok) {
-            mensajeDiv.textContent = translateMessage(result.message) || 'Success!';
+            mensajeDiv.textContent = result.message || 'Success!';
             mensajeDiv.className = 'mt-6 p-4 rounded-xl text-center font-medium text-green-600 bg-green-100 block';
             form.reset();
             if (result.redirect_url) {
               window.location.href = result.redirect_url;
             }
           } else {
-            mensajeDiv.textContent = translateMessage(result.error) || 'An error occurred.';
+            mensajeDiv.textContent = result.error || 'An error occurred.';
             mensajeDiv.className = 'mt-6 p-4 rounded-xl text-center font-medium text-red-600 bg-red-100 block';
           }
         } catch (error) {
@@ -159,12 +131,12 @@
 
       registroForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        submitForm(registroForm, 'http://localhost:5000/users/register');
+        submitForm(registroForm, 'http://127.0.0.1:5000/users/register');
       });
 
       loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        submitForm(loginForm, 'http://localhost:5000/users/login');
+        submitForm(loginForm, 'http://127.0.0.1:5000/users/login');
       });
     });
   </script>

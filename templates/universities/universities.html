@@ -9,29 +9,28 @@
 <body class="bg-gray-50 text-gray-800">
 
   <!-- Navbar -->
-  <nav class="bg-[#00224F] text-white p-4">
-    <div class="container mx-auto flex items-center justify-between">
-      <!-- Logo -->
-      <img src="{{ url_for('static', filename='home/logoFondoAzul.jpeg') }}" 
-           alt="Logo" class="h-16 w-40">
+<nav class="bg-[#00224F] text-white p-4">
+  <div class="container mx-auto flex items-center justify-between">
+    <!-- Logo -->
+    <img src="{{ url_for('static', filename='home/logoFondoAzul.jpeg') }}" 
+         alt="Logo" class="h-16 w-40">
+    <div class="flex items-center space-x-6">
+      <a href="{{ url_for('home_page') }}" class="hover:underline">Home</a>
+      <a href="{{ url_for('universities_page') }}" class="hover:underline">Universities</a>
+      <a href="{{ url_for('podcasts_page') }}" class="hover:underline">Podcasts</a>
+      <a href="{{ url_for('challenges_page') }}" class="hover:underline">Challenges</a>
+      <a href="{{ url_for('subcription_page') }}" class="hover:underline">Get premium</a>
 
-      <!-- Links -->
-      <div class="flex items-center space-x-6">
-        <a href="{{ url_for('home_page') }}" class="hover:underline">Home</a>
-        <a href="{{ url_for('universities_page') }}" class="hover:underline">Universities</a>
-        <a href="{{ url_for('podcasts_page') }}" class="hover:underline">Podcasts</a>
-        <a href="{{ url_for('challenges_page') }}" class="hover:underline">Challenges</a>
-        <a href="{{ url_for('subcription_page') }}" class="hover:underline">Get premium</a>
-        <!-- Foto de perfil -->
-        <a href="{{ url_for('perfil_page') }}">
-          <img id="navbar-pic"
-               src="{{ url_for('static', filename='default.png') }}" 
-               alt="Profile"
-               class="h-10 w-10 rounded-full border-2 border-white hover:scale-105 transition-transform duration-200">
-        </a>
-      </div>
+      <!-- Foto de perfil -->
+      <a href="{{ url_for('perfil_page') }}">
+        <img id="navbar-pic"
+             src="{{ url_for('static', filename='default.png') }}" 
+             alt="Profile"
+             class="h-10 w-10 rounded-full border-2 border-white object-cover object-center hover:scale-105 transition-transform duration-200">
+      </a>
     </div>
-  </nav>
+  </div>
+</nav>
 
   <section class="relative">
     <img src="https://media-exp1.licdn.com/dms/image/C4E1BAQEV7icBnm9_pQ/company-background_10000/0/1537396358823?e=2159024400&v=beta&t=y4-zcmEN8imsaHabp76y8kkwuQQL43RkkrXwONpCv5o"
@@ -166,8 +165,24 @@
     }
 
     // autoplay
-    setInterval(() => moveSlide(1), 4000);
+    setInterval(() => moveSlide(1), 2000);
   </script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const res = await fetch("http://127.0.0.1:5000/profile", {
+            credentials: "include" 
+        });
+        const data = await res.json();
+        if (data && !data.error && data.foto_url) {
+            document.getElementById("navbar-pic").src = "/static/" + data.foto_url;
+        }
+    } catch (err) {
+        console.error("Error cargando foto:", err);
+    }
+});
+</script>
 
 </body>
 </html>

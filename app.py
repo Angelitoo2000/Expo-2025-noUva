@@ -22,7 +22,7 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# --- Conexión a la Base de Datos ---
+# --- Database connection ---
 def get_db_connection():
     try:
         connection = mysql.connector.connect(
@@ -41,7 +41,6 @@ def get_db_connection():
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-# --- Obtener datos de usuario ---
 def get_user_data():
     if 'user_id' not in session:
         return None
@@ -56,13 +55,13 @@ def get_user_data():
             user['foto_url'] = "default.png"
         return user
     except mysql.connector.Error as err:
-        print(f"Error al obtener datos del usuario: {err}")
+        print(f"Error getting user data: {err}")
         return None
     finally:
         cursor.close()
         connection.close()
 
-# --- Rutas principales ---
+# --- Main routes ---
 @app.route('/')
 def principal():
     return render_template('Pagina_principal/principal_page.html')
@@ -111,7 +110,7 @@ def donBosco_page():
     user_data = get_user_data()
     return render_template('donBosco/Don_bosco.html', user_data=user_data)
 
-# --- Registro ---
+# --- Register ---
 @app.route('/users/register', methods=['POST'])
 def register():
     data = request.json
@@ -120,28 +119,28 @@ def register():
     contrasena = data.get('contrasena')
 
     if not nombre or not email or not contrasena:
-        return jsonify({"error": "Todos los campos son obligatorios"}), 400
+        return jsonify({"error": "All fields are required."}), 400
 
     connection = get_db_connection()
     if connection is None:
-        return jsonify({"error": "No se pudo conectar a la base de datos."}), 500
+        return jsonify({"error": "Could not connect to the database."}), 500
 
     cursor = connection.cursor()
     try:
         cursor.execute("SELECT email FROM usuario WHERE email = %s", (email,))
         if cursor.fetchone():
-            return jsonify({"error": "Este email ya está registrado."}), 409
+            return jsonify({"error": "This email is already registered."}), 409
 
         hashed_password = hash_password(contrasena)
         cursor.execute("INSERT INTO usuario (nombre, email, contrasena) VALUES (%s, %s, %s)",
                        (nombre, email, hashed_password))
         connection.commit()
-        return jsonify({"message": "Registro exitoso."}), 201
+        return jsonify({"message": "Registration successful."}), 201
     finally:
         cursor.close()
         connection.close()
 
-# --- Login ---
+
 @app.route('/users/login', methods=['POST'])
 def login_user():
     data = request.json
@@ -149,38 +148,37 @@ def login_user():
     contrasena = data.get('contrasena')
 
     if not email or not contrasena:
-        return jsonify({"error": "Todos los campos son obligatorios"}), 400
+        return jsonify({"error": "All fields are required."}), 400
 
     connection = get_db_connection()
     if connection is None:
-        return jsonify({"error": "No se pudo conectar a la base de datos."}), 500
+        return jsonify({"error": "Could not connect to the database."}), 500
 
     cursor = connection.cursor(dictionary=True)
     try:
         cursor.execute("SELECT usuario_id, contrasena FROM usuario WHERE email = %s", (email,))
         user = cursor.fetchone()
         if user and user['contrasena'] == hash_password(contrasena):
-            session['user_id'] = user['usuario_id']   # ✅ Guardamos la sesión
-            print("⚡ Sesión guardada:", session['user_id'])
+            session['user_id'] = user['usuario_id']
             return jsonify({
-                "message": "Inicio de sesión exitoso.",
+                "message": "Login successful.",
                 "redirect_url": url_for('home_page')
             }), 200
         else:
-            return jsonify({"error": "Email o contraseña incorrectos"}), 401
+            return jsonify({"error": "Invalid email or password."}), 401
     finally:
         cursor.close()
         connection.close()
 
-# --- Perfil (CRUD básico) ---
+
 @app.route('/profile', methods=['GET', 'PUT'])
 def profile():
     if 'user_id' not in session:
-        return jsonify({"error": "No autorizado"}), 401
+        return jsonify({"error": "Unauthorized."}), 401
 
     connection = get_db_connection()
     if connection is None:
-        return jsonify({"error": "No se pudo conectar a la base de datos."}), 500
+        return jsonify({"error": "Could not connect to the database."}), 500
 
     cursor = connection.cursor(dictionary=True)
 
@@ -191,7 +189,7 @@ def profile():
             if user:
                 return jsonify(user), 200
             else:
-                return jsonify({"error": "Usuario no encontrado"}), 404
+                return jsonify({"error": "User not found."}), 404
         finally:
             cursor.close()
             connection.close()
@@ -200,26 +198,26 @@ def profile():
         data = request.json
         new_name = data.get('nombre')
         if not new_name:
-            return jsonify({"error": "El nombre no puede estar vacío."}), 400
+            return jsonify({"error": "Name cannot be empty."}), 400
 
         try:
             cursor.execute("UPDATE usuario SET nombre = %s WHERE usuario_id = %s", (new_name, session['user_id']))
             connection.commit()
-            return jsonify({"message": "Nombre de perfil actualizado exitosamente."}), 200
+            return jsonify({"message": "Profile updated successfully."}), 200
         finally:
             cursor.close()
             connection.close()
 
-# --- Subida y eliminación de foto ---
+# --- Upload & delete profile picture ---
 @app.route('/profile/picture', methods=['POST'])
 def upload_picture():
     if 'user_id' not in session: 
-        return jsonify({"error": "No autorizado"}), 401
+        return jsonify({"error": "Unauthorized."}), 401
     if 'file' not in request.files: 
-        return jsonify({"error": "No se proporcionó ningún archivo."}), 400
+        return jsonify({"error": "No file provided."}), 400
     file = request.files['file']
     if file.filename == '': 
-        return jsonify({"error": "No se seleccionó ningún archivo."}), 400
+        return jsonify({"error": "No file selected."}), 400
     
     if file:
         original_filename = file.filename
@@ -231,7 +229,7 @@ def upload_picture():
         
         connection = get_db_connection()
         if connection is None: 
-            return jsonify({"error": "No se pudo conectar a la base de datos."}), 500
+            return jsonify({"error": "Could not connect to the database."}), 500
         
         cursor = connection.cursor()
         query = "UPDATE usuario SET foto_url = %s WHERE usuario_id = %s"
@@ -242,18 +240,18 @@ def upload_picture():
         connection.close()
         
         full_url = url_for('static', filename=db_path)
-        return jsonify({"message": "Foto de perfil actualizada", "foto_url": full_url}), 200
+        return jsonify({"message": "Profile picture updated successfully.", "foto_url": full_url}), 200
         
-    return jsonify({"error": "Ocurrió un error al subir el archivo."}), 500
+    return jsonify({"error": "An error occurred while uploading the file."}), 500
 
 @app.route('/profile/picture', methods=['DELETE'])
 def delete_picture():
     if 'user_id' not in session: 
-        return jsonify({"error": "No autorizado"}), 401
+        return jsonify({"error": "Unauthorized."}), 401
     
     connection = get_db_connection()
     if connection is None: 
-        return jsonify({"error": "No se pudo conectar a la base de datos."}), 500
+        return jsonify({"error": "Could not connect to the database."}), 500
     
     cursor = connection.cursor()
     cursor.execute("UPDATE usuario SET foto_url = 'default.png' WHERE usuario_id = %s", (session['user_id'],))
@@ -262,7 +260,7 @@ def delete_picture():
     connection.close()
     
     default_url = url_for('static', filename='default.png')
-    return jsonify({"message": "Foto de perfil eliminada.", "foto_url": default_url}), 200
+    return jsonify({"message": "Profile picture removed.", "foto_url": default_url}), 200
 
 # --- Run ---
 if __name__ == '__main__':
