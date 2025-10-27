@@ -33,69 +33,53 @@
 </nav>
 
 
-  <main class="container mx-auto mt-10 p-5">
+  <main class="container mx-auto mt-10 ">
 
-    <!-- Sección 1 -->
-    <section class="flex flex-col md:flex-row items-center justify-between gap-10 my-16">
-      <div class="md:w-1/2">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
-          Why we are<br> an innovation<br> platform?
-        </h1>
-      </div>
-      <div class="md:w-1/2">
-        <p class="text-lg text-gray-600">
-          A space designed to stimulate creativity and collaboration, providing the necessary tools and resources to turn innovative ideas into concrete projects.
-        </p>
-      </div>
-    </section>
+    <section class="my-20">
+  <h2 class="font-bold text-3xl md:text-4xl text-center text-gray-800 mb-10">
+    Most Popular Majors
+  </h2>
 
-    <section class="my-16">
-      <h2 class="font-bold text-3xl md:text-4xl text-center text-gray-800 mb-10">Most Popular Majors</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white p-6 flex flex-col items-center justify-center rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-          <img src="{{ url_for('static', filename='home/code_coding_programming_browser_icon_124774.png') }}" alt="Computer Science" class="w-20 h-20 mb-4">
-          <span class="font-bold text-gray-700">Computer Science</span>
-        </div>
-        <div class="bg-white p-6 flex flex-col items-center justify-center rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-          <img src="{{ url_for('static', filename='home/comment.png') }}" alt="Marketing" class="w-20 h-20 mb-4">
-          <span class="font-bold text-gray-700">Marketing</span>
-        </div>
-        <div class="bg-white p-6 flex flex-col items-center justify-center rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-          <img src="{{ url_for('static', filename='home/briefcase.png') }}" alt="Business" class="w-20 h-20 mb-4">
-          <span class="font-bold text-gray-700">Business</span>
-        </div>
-      </div>
-    </section>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-10 px-6 md:px-20">
+    <div class="bg-white p-10 flex flex-col items-center justify-center rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 min-h-[480px]">
+      <img src="{{ url_for('static', filename='home/ComputerScince.png') }}" alt="Computer Science" class="w-42 h-72 mb-6">
+      <span class="font-bold text-gray-700 text-lg md:text-xl text-center">
+        Computer Science
+      </span>
+    </div>
+
+    <div class="bg-white p-10 flex flex-col items-center justify-center rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 min-h-[480px]">
+      <img src="{{ url_for('static', filename='home/Marketing.png') }}" alt="Marketing" class="w-42 h-76 mb-6">
+      <span class="font-bold text-gray-700 text-lg md:text-xl text-center">
+        Marketing
+      </span>
+    </div>
+
+    <div class="bg-white p-10 flex flex-col items-center justify-center rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 min-h-[480px]">
+      <img src="{{ url_for('static', filename='home/Business.png') }}" alt="Business" class="w-42 h-72 mb-6">
+      <span class="font-bold text-gray-700 text-lg md:text-xl text-center">
+        Business
+      </span>
+    </div>
+  </div>
+</section>
 
     <section class="my-16">
       <h2 class="font-bold text-3xl md:text-4xl text-center text-gray-800 mb-10">Featured Universities</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <a href="{{ url_for('donBosco_page') }}" class="bg-white p-6 flex flex-col items-center justify-center rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-          <img src="{{ url_for('static', filename='home/facebook.jpg') }}" alt="Universidad Don Bosco" class="w-40 h-32 object-cover rounded-md mb-4">
+          <img src="{{ url_for('static', filename='home/facebook.jpg') }}" alt="Universidad Don Bosco" class="w-62 h-52 object-cover rounded-md mb-4">
           <p class="font-bold text-gray-700">Universidad Don Bosco</p>
         </a>
         <a href="{{ url_for('universities_page') }}" class="bg-white p-6 flex flex-col items-center justify-center rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-          <img src="{{ url_for('static', filename='home/R.jpeg') }}" alt="Universidad De El Salvador" class="w-40 h-32 object-cover rounded-md mb-4">
-          <p class="font-bold text-gray-700">Universidad De El Salvador</p>
+          <img src="{{ url_for('static', filename='home/R.jpeg') }}" alt="Universidad De El Salvador" class="w-62 h-52 object-cover rounded-md mb-4">
+          <p class="font-bold text-gray-700">Universidad Tecnologica</p>
         </a>
         <a href="{{ url_for('universities_page') }}" class="bg-white p-6 flex flex-col items-center justify-center rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-          <img src="{{ url_for('static', filename='home/USAM-CAMPUS.jpg') }}" alt="Universidad Gerardo Barrios" class="w-40 h-32 object-cover rounded-md mb-4">
-          <p class="font-bold text-gray-700">Universidad Gerardo Barrios</p>
+          <img src="{{ url_for('static', filename='home/USAM-CAMPUS.jpg') }}" alt="Universidad Gerardo Barrios" class="w-62 h-52 object-cover rounded-md mb-4">
+          <p class="font-bold text-gray-700">Universidad Salvadorena Alberto Masferrer</p>
         </a>
       </div>
-    </section>
-    <section class="flex flex-col md:flex-row items-center justify-between gap-10 my-16">
-      <div class="md:w-1/2">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
-          What are our<br> challenges?
-        </h1>
-      </div>
-      <div class="md:w-1/2">
-        <p class="text-lg text-gray-600">
-          Our challenges focus on the environment, society, technology, and health, addressing crucial problems through innovation and practical solutions that can improve the quality of life for all people.
-        </p>
-      </div>
-    </section>
 
   </main>
 
