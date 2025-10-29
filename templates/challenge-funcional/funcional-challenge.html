@@ -48,7 +48,7 @@
 
       <div class="mt-6 hidden" id="returnBtnContainer">
         <a href="{{ url_for('challenges_page') }}" 
-           class="px-6 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition">
+           class="px-6 py-2 bg-[#D9D9D9]  rounded-lg hover:bg-[#D9D9D9] transition">
            🔙 Go back to challenges
         </a>
       </div>
@@ -168,7 +168,7 @@
         patternEl.classList.add("hidden");
         optionsEl.innerHTML = "";
         feedbackEl.textContent = `🎉 You finish the challenge! Your score is: ${score} / ${challenges.length}`;
-        feedbackEl.className = "text-indigo-700 font-bold";
+        feedbackEl.className = "font-bold";
         nextBtn.classList.add("hidden");
         returnBtnContainer.classList.remove("hidden");
       }
